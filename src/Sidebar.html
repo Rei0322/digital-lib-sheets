@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Short+Stack&display=swap" rel="stylesheet">
+    <style>
+        /* 🧸 COZY AESTHETIC */
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            padding: 12px; 
+            background-color: #f7f4ef; 
+            color: #4a3c31; 
+        }
+
+        /* COLLAPSIBLE INSTRUCTIONS BLOCK */
+        .instructions {
+            font-size: 11px;
+            background: #ebe4d8;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #c4a482; 
+            margin-bottom: 15px;
+            color: #4a3c31;
+            line-height: 1.4;
+        }
+
+        /* Removes the default ugly outline when clicking the summary */
+        details.instructions summary {
+            cursor: pointer;
+            outline: none;
+            font-size: 12px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        details.instructions summary::-webkit-details-marker {
+            display: none; 
+        }
+
+        /* Custom Dropdown Arrow */
+        details.instructions summary::before {
+            content: '📖 ';
+            margin-right: 5px;
+            font-size: 14px;
+        }
+        details[open].instructions summary::before {
+            content: '📖 ';
+        }
+
+        h3 { 
+            font-family: 'Short Stack', cursive, sans-serif;
+            font-weight: 600;
+            font-size: 15px; 
+            color: #5c4738; 
+            border-bottom: 2px solid #dcd3c6; 
+            padding-bottom: 3px; 
+            margin: 15px 0 10px 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+
+        button {
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 600; 
+            padding: 12px 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        }
+
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.12); filter: brightness(105%); }
+        button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* THE COZY BUTTON PALETTE */
+        .btn-sync { background-color: #a88b73; color: #ffffff;} 
+        .btn-scrape { background-color: #8fa093; color: #ffffff; } 
+        .btn-util { background-color: #c4a482; color: #ffffff; } 
+        .btn-secondary { background-color: #dcd3c6; color: #4a3c31; } 
+        .btn-cancel { background-color: transparent; color: #a88b73; border: 1px solid #a88b73; box-shadow: none; }
+
+        /* PROGRESS BAR */
+        .progress-container { width: 100%; background: #e3ddd5; border-radius: 10px; margin-top: 15px; display: none; overflow: hidden; height: 6px; }
+        .progress-bar { width: 30%; height: 100%; background: #a88b73; border-radius: 10px; animation: slide 1.5s infinite ease-in-out; }
+
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
+        }
+
+        #status { 
+            font-family: 'Short Stack', cursive, sans-serif;
+            font-weight: 600;
+            font-size: 13px; 
+            color: #5c4738; 
+            text-align: center; 
+            margin-top: 10px; 
+            min-height: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<details class="instructions">
+    <summary><strong>Tool Guide & Workflow</strong></summary>
+    <div style="margin-top: 10px;">
+        <strong>1. The Assembly Line</strong><br>
+        <i>Paste your raw CSV into Goodreads_Import, then click:</i>
+        <ul style="margin: 3px 0 10px 0; padding-left: 20px;">
+            <li><strong>Clean Data:</strong> Splices the messy CSV, separates series info, and preps the data.</li>
+            <li><strong>Master Sync:</strong> Routes the clean books to your Tracker/Wishlist & updates old titles.</li>
+        </ul>
+
+        <strong>2. Detail Fillers</strong>
+        <ul style="margin: 3px 0 10px 0; padding-left: 20px;">
+            <li><strong>Sync Pages:</strong> Pulls total page counts from the database into the Reading list.</li>
+            <li><strong>Sync Covers:</strong> Pastes saved Drive covers to both lists.</li>
+            <li><strong>Sync Kindle:</strong> Connects to Readwise to fetch native covers.</li>
+        </ul>
+
+        <strong>3. Utilities & Tools</strong>
+        <ul style="margin: 3px 0 0 0; padding-left: 20px;">
+            <li><strong>Ratings Calc:</strong> Toggles your CAWPILE calculator sheet open and closed.</li>
+            <li><strong>Manual Routing:</strong> A direct route if Master Sync needs a bypass.</li>
+            <li><strong>Scrape HTML:</strong> Extracts cover images from a saved Goodreads webpage.</li>
+            <li><strong>Show/Hide Setup:</strong> Toggles visibility of your backend sheets.</li>
+        </ul>
+    </div>
+</details>
+
+<h3>System Operations</h3>
+<div class="button-grid">
+    <button id="clean-data-btn" class="btn-util" onclick="run('cleanGoodreadsData')">🧹<br>Clean Data</button>
+    <button id="master-sync-btn" class="btn-sync" onclick="runMasterSync()">🚀<br>Master Sync</button>
+</div>
+<div class="button-grid">
+    <button class="btn-scrape" onclick="runBackupSync('syncEbookPages', 'Pages')">📖 Sync Pages</button>
+    <button class="btn-secondary" onclick="runBackupSync('masterGoodreadsSync', 'Goodreads Data')">📝 Manual Routing</button>
+</div>
+<div class="button-grid">
+    <button class="btn-cancel" onclick="cancelSync()" style="grid-column: span 2;">🛑 Stop / Reset UI</button>
+</div>
+
+<h3>Covers & Media</h3>
+<div class="button-grid">
+    <button id="cover-sync-btn" class="btn-util" onclick="run('syncCoversFromDrive')">🖼️<br>Sync Covers</button>
+    <button class="btn-util" onclick="run('importFromReadwise')" style="background-color: #8c6b5d; color: #ffffff;">📚<br>Sync Kindle</button>
+</div>
+<div class="button-grid">
+    <button class="btn-secondary" onclick="run('scrapeFromHTML')" style="grid-column: span 2;">🕵️‍♂️ Scrape HTML File for Covers</button>
+</div>
+
+<h3>Quick Tools & Visibility</h3>
+<div class="button-grid">
+    <button class="btn-scrape" onclick="run('toggleCalculator')" style="grid-column: span 2; font-size: 14px;">🧮 Toggle Ratings Calculator</button>
+</div>
+<div class="button-grid">
+    <button class="btn-secondary" onclick="run('showAllUtilitySheets')">👁️ Show Setup</button>
+    <button class="btn-secondary" onclick="run('hideAllUtilitySheets')">🙈 Hide Setup</button>
+</div>
+
+<div id="progress-container" class="progress-container"><div class="progress-bar"></div></div>
+<div id="status">System Ready.</div>
+
+<script>
+    let globalTimer; 
+
+    function run(fn) { 
+        const container = document.getElementById('progress-container');
+        const status = document.getElementById('status');
+
+        container.style.display = "block";
+        status.innerText = "Working on it...";
+        status.style.color = "#8c6b5d";
+
+        google.script.run
+            .withSuccessHandler(() => {
+                container.style.display = "none";
+                status.innerText = "✅ Operation complete!";
+                status.style.color = "#8fa093";
+            })
+            .withFailureHandler(e => {
+                container.style.display = "none";
+                status.innerText = "⚠️ Error: " + e.message;
+                status.style.color = "#a84a4a";
+                alert(e);
+            })
+            [fn](); 
+    }
+
+    function cancelSync() {
+        if (globalTimer) clearInterval(globalTimer);
+        document.getElementById('master-sync-btn').disabled = false;
+        document.getElementById('cover-sync-btn').disabled = false;
+        document.getElementById('clean-data-btn').disabled = false;
+        document.getElementById('progress-container').style.display = "none";
+
+        const status = document.getElementById('status');
+        status.innerText = "🛑 UI Reset.";
+        status.style.color = "#a88b73";
+    }
+
+    function runMasterSync() {
+        const btn = document.getElementById('master-sync-btn');
+        const container = document.getElementById('progress-container');
+        const status = document.getElementById('status');
+
+        btn.disabled = true;
+        container.style.display = "block";
+        status.style.color = "#8c6b5d";
+
+        let timeLeft = 15;
+        status.innerHTML = "Routing Books...<br>Estimated time: " + timeLeft + "s";
+
+        globalTimer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft > 0) {
+                status.innerHTML = "Routing Books...<br>Estimated time: " + timeLeft + "s";
+            } else {
+                status.innerHTML = "Wrapping up and cleaning import sheet...";
+            }
+        }, 1000);
+
+        google.script.run
+            .withSuccessHandler(() => {
+                clearInterval(globalTimer);
+                btn.disabled = false;
+                container.style.display = "none";
+                status.innerText = "✅ Master Sync Complete!";
+                status.style.color = "#8fa093";
+            })
+            .withFailureHandler(e => {
+                clearInterval(globalTimer);
+                btn.disabled = false;
+                container.style.display = "none";
+                status.innerText = "⚠️ Sync Error: " + e.message;
+            })
+            .masterSync();
+    }
+
+    function runBackupSync(functionName, sheetName) {
+        const container = document.getElementById('progress-container');
+        const status = document.getElementById('status');
+
+        container.style.display = "block";
+        status.innerText = "Syncing " + sheetName + "...";
+        status.style.color = "#8c6b5d";
+
+        google.script.run
+            .withSuccessHandler(() => {
+                container.style.display = "none";
+                status.innerText = "✅ " + sheetName + " synced successfully!";
+                status.style.color = "#8fa093";
+            })
+            .withFailureHandler(e => {
+                container.style.display = "none";
+                status.innerText = "⚠️ Error: " + e.message;
+                status.style.color = "#a84a4a";
+            })
+            [functionName]();
+    }
+</script>
+</body>
+</html>

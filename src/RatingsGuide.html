@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+      
+      body {
+        font-family: 'Short Stack', cursive, sans-serif;
+        background-color: #f7f3ec; /* Matches your beige dashboard */
+        color: #4a443c; 
+        padding: 12px;
+        margin: 0;
+      }
+      
+      /* Main Button Styling */
+      .btn {
+        background-color: #8fa396; /* Sage Green */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        width: 100%;
+        font-family: 'Short Stack', cursive;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.1s;
+      }
+      
+      .btn:active { transform: translateY(2px); }
+
+      /* Intro Blurb */
+      .intro-blurb {
+        background-color: transparent;
+        padding: 0 5px 15px 5px;
+        font-size: 13px;
+        line-height: 1.5;
+        text-align: center;
+        color: #5c554b;
+      }
+
+      /* Collapsible Card Styling */
+      details {
+        background-color: white;
+        border-radius: 15px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid #e2dcd0;
+        overflow: hidden;
+      }
+
+      summary {
+        padding: 15px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+      }
+
+      summary::after {
+        content: "＋";
+        color: #b06d5c;
+        font-size: 18px;
+      }
+
+      details[open] summary::after { content: "✕"; }
+
+      .card-content {
+        padding: 0 15px 15px 15px;
+        border-top: 1px dashed #eee;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      h3 {
+        margin: 0;
+        display: inline;
+        color: #b06d5c; /* Rust color */
+      }
+
+      ul { padding-left: 18px; margin: 5px 0; }
+      li { margin-bottom: 6px; }
+      .highlight { color: #b06d5c; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+
+    <button class="btn" onclick="google.script.run.toggleCalculator()">🧮 Toggle Ratings Calculator</button>
+
+    <div class="intro-blurb">
+      ✨ <b>Pick Your Scale:</b> Use <b>CAWPILE</b> for fiction/fantasy, <b>HEARTED</b> for your romance reads, and <b>CRAFT</b> for non-fiction or hobby guides. Don't forget the <b>Spice Scale</b> for those extra-steamy bonus points! 🌶️
+    </div>
+
+    <details>
+      <summary><h3>⚖️ THE CAWPILE SYSTEM</h3></summary>
+      <div class="card-content">
+        <span class="highlight">Standard Fiction & Fantasy</span>
+        <ul>
+          <li><b>Characters:</b> Distinct voices? Clear motivations?</li>
+          <li><b>Atmosphere:</b> Immersive world-building?</li>
+          <li><b>Writing:</b> Engaging prose? Good pacing?</li>
+          <li><b>Plot:</b> Compelling story? Satisfying twists?</li>
+          <li><b>Intrigue:</b> Unputdownable?</li>
+          <li><b>Logic:</b> Do the world rules make sense?</li>
+          <li><b>Enjoyment:</b> Overall fun factor!</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><h3>❤️ THE HEARTED SYSTEM</h3></summary>
+      <div class="card-content">
+        <span class="highlight">Romance & Romantasy Star Rating</span>
+        <ul>
+          <li><b>Heart:</b> Emotional stakes and depth.</li>
+          <li><b>Execution:</b> How well the tropes were handled.</li>
+          <li><b>Attraction:</b> Chemistry and the "spark."</li>
+          <li><b>Relationship:</b> Growth of the couple's bond.</li>
+          <li><b>Tension:</b> The "Slow Burn" or yearning factor.</li>
+          <li><b>Enjoyment:</b> Overall squeal/swoon factor!</li>
+          <li><b>Denouement:</b> Logic/Satisfaction of the HEA.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><h3>🧠 THE CRAFT SYSTEM</h3></summary>
+      <div class="card-content">
+        <span class="highlight">Non-Fiction, Memoirs & Hobby Guides</span>
+        <ul>
+          <li><b>Clarity:</b> Easy to follow? Good visuals?</li>
+          <li><b>Relevance:</b> Useful or practical for your life?</li>
+          <li><b>Authority:</b> Does the author have clear expertise?</li>
+          <li><b>Flow:</b> Engaging to read or too dry?</li>
+          <li><b>Takeaways:</b> Learned something new or inspired?</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><h3>🔥 THE CLIMAX SCALE</h3></summary>
+      <div class="card-content">
+        <span class="highlight">Intimacy & Emotion (Out of 69)</span>
+        <ul>
+          <li><b>✦ Chemistry (/11):</b> Tension and magnetic pull.</li>
+          <li><b>✦ Lust (/11):</b> Attraction and pure desire.</li>
+          <li><b>✦ Intimacy (/11):</b> Vulnerability and trust.</li>
+          <li><b>✦ Mood (/11):</b> Romantic vibes and atmosphere.</li>
+          <li><b>✦ Angst (/11):</b> Yearning and pain before payoff.</li>
+          <li><b>✦ X-Factor (/14):</b> Unique tropes or kinks.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><h3>🌶️ THE FLAME SCALE</h3></summary>
+      <div class="card-content">
+        <span class="highlight">Explicitness (Out of 25)</span>
+        <ul>
+          <li><b>✦ Foreplay (/5):</b> The build-up and teasing.</li>
+          <li><b>✦ Language (/5):</b> Dirty talk and dialogue.</li>
+          <li><b>✦ Anatomy (/5):</b> Clinical vs. euphemistic details.</li>
+          <li><b>✦ Mood (/5):</b> Tone (romantic, rough, dark).</li>
+          <li><b>✦ Explicitness (/5):</b> On-page detail level.</li>
+        </ul>
+      </div>
+    </details>
+
+  </body>
+</html>
