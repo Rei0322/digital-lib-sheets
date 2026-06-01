@@ -1,5 +1,5 @@
 /**
- * LADYSTACKS RATINGS CALCULATOR - MASTER SYNC
+ * Book tracker 🧸 RATINGS CALCULATOR - MASTER SYNC
  * Converts raw scores (CAWPILE/HEARTED/CRAFT & Spice) to emojis 
  * and pastes them as static values in the Reading list.
  */

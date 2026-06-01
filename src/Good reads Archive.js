@@ -1,5 +1,5 @@
 /**
- * MASTER GOODREADS SYNC (LADYSTACKS EDITION - V4)
+ * MASTER GOODREADS SYNC (Book tracker 🧸 EDITION - V4)
  * 🎯 FIXED: Maps correctly to Wishlist Col G, fixes Gap Overwrite, and fixes Deduplication!
  */
 function masterGoodreadsSync() {

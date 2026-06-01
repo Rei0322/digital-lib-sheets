@@ -77,7 +77,7 @@ function syncEbookPages() {
 
 
 /**
- * FETCH TOTAL PAGES (LADYSTACKS EDITION)
+ * FETCH TOTAL PAGES (Book tracker 🧸 EDITION)
  * Scans your Reading list and fills in missing page counts!
  */
 function pullPagesToTracker() {

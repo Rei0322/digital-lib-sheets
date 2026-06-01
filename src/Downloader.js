@@ -9,7 +9,7 @@ function superFuzzy(str) {
 }
 
 /**
- * ONE-CLICK SYNC (LADYSTACKS EDITION)
+ * ONE-CLICK SYNC (Book tracker 🧸 EDITION)
  * Scans both Reading list and Wishlist, then batch-pastes =IMAGE() formulas!
  */
 function syncCoversFromDrive() {
@@ -17,7 +17,7 @@ function syncCoversFromDrive() {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const folderId = 'token';
 
-    // ⚙️ LADYSTACKS CONFIGURATION
+    // ⚙️ Book tracker 🧸 CONFIGURATION
     const targets = [
         { sheet: ss.getSheetByName('Reading list'), startRow: 4, titleCol: 3, coverCol: 4 }, // C & D
         { sheet: ss.getSheetByName('Wishlist'), startRow: 13, titleCol: 7, coverCol: 14 }     // G & N

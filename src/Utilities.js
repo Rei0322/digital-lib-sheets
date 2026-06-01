@@ -255,7 +255,7 @@ function resetCoverMemory() {
 }
 
 /**
- * 🧹 DATA CLEANER (LADYSTACKS EDITION)
+ * 🧹 DATA CLEANER (Book tracker 🧸 EDITION)
  * Grabs raw CSV from Goodreads_Import, splits Title/Series, and pastes to Goodreads_Cleaned!
  */
 function cleanGoodreadsData() {
@@ -335,7 +335,7 @@ function cleanGoodreadsData() {
 }
 
 /**
- * 🧮 TOGGLE CALCULATOR (LADYSTACKS EDITION)
+ * 🧮 TOGGLE CALCULATOR (Book tracker 🧸 EDITION)
  * Opens the Ratings Calculator sheet if hidden, hides it if open!
  */
 function toggleCalculator() {

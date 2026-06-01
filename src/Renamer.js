@@ -1,5 +1,5 @@
 /**
- * SMART RENAMER (LADYSTACKS EDITION)
+ * SMART RENAMER (Book tracker 🧸 EDITION)
  * Grabs Book IDs from the Import tab, cleans the titles on the fly, and renames the files!
  */
 function smartRenameFromDrive() {
