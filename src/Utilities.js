@@ -367,39 +367,3 @@ function showRatingsGuide() {
       .setWidth(300);
   SpreadsheetApp.getUi().showSidebar(html);
 }
-
-function resetAllGridCards() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var dnfLog = ss.getSheetByName("DNF Log");
-  
-  // 1. Define your master source template block
-  var sourceTemplate = dnfLog.getRange("AC45:BB54");
-  
-  // 2. Exact Grid Math settings from your layout mapping
-  const maxCardsPerRow = 4;
-  const maxRowsOfCards = 20; 
-  const rowStride = 11;      // Jumps 11 rows down per grid row
-  const colStride = 27;      // Jumps 27 columns right per grid column
-  
-  // Array to hold all target ranges for a faster batch execution
-  var targetRanges = [];
-
-  // 3. Loop through the entire layout grid
-  for (let r = 0; r < maxRowsOfCards; r++) {
-    // Calculates the starting row for the current card block (Row 12)
-    let startRow = 12 + (r * rowStride); 
-
-    for (let c = 0; c < maxCardsPerRow; c++) {
-      // Calculates the starting column for the current card block (Col B / 2)
-      let startCol = 2 + (c * colStride); 
-      
-      // Target range matching the exact 10x26 size of the template
-      let cardRange = dnfLog.getRange(startRow, startCol, 10, 26);
-      
-      // Copy the blank template over this card block
-      sourceTemplate.copyTo(cardRange);
-    }
-  }
-  
-  ss.toast("All DNF Log cards have been reset to default state! 🔄", "Reset Complete");
-}
