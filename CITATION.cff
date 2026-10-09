@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "Digital Lib Sheets"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Ray
+    given-names: Samira
+    orcid: "https://orcid.org/0009-0006-6885-8400"
+repository-code: "https://github.com/Rei0322/digital-lib-sheets"
+license: MIT
